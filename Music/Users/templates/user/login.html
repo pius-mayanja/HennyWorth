@@ -1,0 +1,40 @@
+{% extends 'dash/base.html' %}
+
+{% block title %}Login {% endblock %}
+{% load static %}
+{% block content %}
+<div class="max-w-4xl mx-auto flex items-center justify-center">
+    <h1 class="text-2xl lg:text-4xl my-5 px-4 lg:mt-10 lg:mb-10">Login</h1>
+</div>
+<div class="">
+    <form class="max-w-sm mx-auto px-5" method="post" action="{% url 'Users:login' %}?next={{ request.GET.next }}">
+        {% csrf_token %}
+        <div class="mb-5">
+        <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
+        {{form.username}}
+      </div>
+      <div class="mb-5">
+        <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your password</label>
+        {{form.password}}
+      </div>
+      <div class="flex items-start mb-5">
+        <div class="flex items-center h-5">
+          <input id="remember" type="checkbox" value="" class="mt-2 w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" required />
+        </div>
+        <div class="block">
+          <label for="remember" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Remember me</label>
+          <p class="ms-2 text-sm text-gray-900 dark:text-gray-300">Don't have an account? <a href="{%url 'Users:signup' %}" class="text-blue-500">Sign Up</a></p>
+        </div>
+      </div>
+      <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Login</button>
+    {% if form.errors or form.non_field_errors %}
+        <div class="mb-3 p-3 bg-red-100 rounded-xl mt-2">
+            {% for field in form %}
+            {{ field.errors }}
+            {% endfor %}
+            {{ form.non_field_errors }}
+        </div>
+    {% endif %}
+    </form>
+</div>  
+{% endblock %}
